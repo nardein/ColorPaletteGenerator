@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@plugin "daisyui";
+
+/* Hanson Bold */
+@font-face {
+    font-family: 'Hanson';
+    src: url('./assets/fonts/Hanson-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Roboto Regular */
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-VariableFont_wdth\,wght.ttf')
+        format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@theme {
+    --font-hanson: Hanson, sans-serif;
+    --font-Roboto: Roboto;
+}
+
+html,
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
