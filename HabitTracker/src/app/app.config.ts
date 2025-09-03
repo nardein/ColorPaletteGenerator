@@ -5,7 +5,7 @@ import {
 } from '@angular/core'
 import { provideRouter } from '@angular/router'
 import { routes } from './app.routes'
-import { LucideAngularModule, Moon, Plus } from 'lucide-angular'
+import { LucideAngularModule, Moon, Plus, Sun } from 'lucide-angular'
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
             LucideAngularModule.pick({
                 Plus,
                 Moon,
+                Sun,
             })
         ),
     ],

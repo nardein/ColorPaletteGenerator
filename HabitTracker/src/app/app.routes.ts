@@ -9,12 +9,14 @@ export const routes: Routes = [
     {
         path: 'Home',
         loadComponent: () =>
-            import('./home/home.component').then((m) => m.HomeComponent),
+            import('./components/home/home.component').then(
+                (m) => m.HomeComponent
+            ),
     },
     {
         path: 'HabitFormComponent',
         loadComponent: () =>
-            import('./habit-form/habit-form-component').then(
+            import('./components/habit-form/habit-form-component').then(
                 (m) => m.HabitFormComponent
             ),
     },

@@ -1,0 +1,64 @@
+<div class="grid grid-cols-12 gap-4 p-4">
+    <!-- Header: Titoli + Luna -->
+    <div class="col-span-9 row-span-3 flex items-start justify-between">
+        <!-- Titoli -->
+        <div class="flex flex-col gap-0">
+            <h1
+                class="font-hanson text-[164px] leading-none text-green-800 text-shadow-lg dark:text-green-300"
+            >
+                Habit
+            </h1>
+            <h1
+                class="font-hanson text-[164px] leading-none text-green-800 text-shadow-lg dark:text-green-300"
+            >
+                Tracker
+            </h1>
+        </div>
+
+        <!-- Toggle Tema -->
+        <div
+            class="absolute top-4 right-4 flex h-10 w-20 cursor-pointer items-center justify-between rounded-full bg-green-600 p-1 dark:bg-green-300"
+            (click)="toggleTheme()"
+        >
+            <!-- Sole e Luna fissi ai lati -->
+            <lucide-icon
+                name="sun"
+                class="h-6 w-6 text-green-800"
+            ></lucide-icon>
+            <lucide-icon
+                name="moon"
+                class="h-6 w-6 text-green-800"
+            ></lucide-icon>
+
+            <!-- Knob mobile -->
+            <div
+                class="absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-transform duration-300 ease-in-out"
+                [ngClass]="
+                    theme() === 'light' ? 'translate-x-0' : 'translate-x-10'
+                "
+            ></div>
+        </div>
+    </div>
+
+    <!-- Bottone principale per aggiungere le habit -->
+    <div class="col-span-3 row-span-3 flex items-center justify-center">
+        <button
+            class="btn btn-lg flex h-32 w-32 border-none bg-green-600 drop-shadow-lg drop-shadow-green-500/80 dark:bg-green-300"
+        >
+            <lucide-icon
+                name="plus"
+                class="h-16 w-16 text-green-800"
+            ></lucide-icon>
+        </button>
+    </div>
+
+    <!-- Sottotitolo -->
+    <div
+        class="col-span-12 row-span-2 mt-10 flex items-center justify-center pl-8"
+    >
+        <p class="text-xl text-green-800 dark:text-green-300">
+            Minimal, free habit tracker for people who hate messy apps and want
+            to focus on building good habits.
+        </p>
+    </div>
+</div>
