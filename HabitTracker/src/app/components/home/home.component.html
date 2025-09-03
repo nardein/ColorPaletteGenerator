@@ -1,64 +1,65 @@
-<div class="grid grid-cols-12 gap-4 p-4">
-    <!-- Header: Titoli + Luna -->
-    <div class="col-span-9 row-span-3 flex items-start justify-between">
-        <!-- Titoli -->
-        <div class="flex flex-col gap-0">
-            <h1
-                class="font-hanson text-[164px] leading-none text-green-800 text-shadow-lg dark:text-green-300"
-            >
-                Habit
-            </h1>
-            <h1
-                class="font-hanson text-[164px] leading-none text-green-800 text-shadow-lg dark:text-green-300"
-            >
-                Tracker
-            </h1>
-        </div>
+<div class="min-h-screen bg-green-200 dark:bg-gray-900">
+    <div class="grid grid-cols-12 gap-4 p-4">
+        <!-- Header: Titoli + Luna -->
+        <div class="col-span-9 row-span-3 flex items-start justify-between pl-4">
+            <!-- Titoli -->
+            <div class="flex gap-2">
+                <h1
+                    class="font-hanson text-6xl leading-none text-green-900 text-shadow-lg dark:text-violet-300"
+                >
+                    Color
+                </h1>
+                <h1
+                    class="font-hanson text-6xl leading-none text-green-900 text-shadow-lg dark:text-violet-300"
+                >
+                    Palette
+                </h1>
+            </div>
 
-        <!-- Toggle Tema -->
-        <div
-            class="absolute top-4 right-4 flex h-10 w-20 cursor-pointer items-center justify-between rounded-full bg-green-600 p-1 dark:bg-green-300"
-            (click)="toggleTheme()"
-        >
-            <!-- Sole e Luna fissi ai lati -->
-            <lucide-icon
-                name="sun"
-                class="h-6 w-6 text-green-800"
-            ></lucide-icon>
-            <lucide-icon
-                name="moon"
-                class="h-6 w-6 text-green-800"
-            ></lucide-icon>
-
-            <!-- Knob mobile -->
+            <!-- Toggle Tema -->
             <div
-                class="absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-transform duration-300 ease-in-out"
-                [ngClass]="
-                    theme() === 'light' ? 'translate-x-0' : 'translate-x-10'
-                "
-            ></div>
+                class="inset-shadow-md dark:inset-shadow-md absolute top-4 right-4 flex h-10 w-20 cursor-pointer items-center justify-between rounded-full bg-green-600 p-1 inset-shadow-green-950 dark:bg-violet-300 dark:inset-shadow-violet-950"
+                (click)="toggleTheme()"
+            >
+                <!-- Sole e Luna fissi ai lati -->
+                <lucide-icon name="sun" class="h-6 w-6 text-green-900"></lucide-icon>
+                <lucide-icon name="moon" class="h-6 w-6 text-green-900"></lucide-icon>
+
+                <!-- Knob mobile -->
+                <div
+                    class="absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-transform duration-300 ease-in-out"
+                    [ngClass]="theme() === 'light' ? 'translate-x-0' : 'translate-x-10'"
+                ></div>
+            </div>
+        </div>
+        <div class="col-span-9 row-span-3 flex justify-start pl-4">
+            <p class="text-xl text-green-900 dark:text-violet-300">
+                Minimal, free color palette generator for people who hate messy apps.
+            </p>
         </div>
     </div>
 
-    <!-- Bottone principale per aggiungere le habit -->
-    <div class="col-span-3 row-span-3 flex items-center justify-center">
-        <button
-            class="btn btn-lg flex h-32 w-32 border-none bg-green-600 drop-shadow-lg drop-shadow-green-500/80 dark:bg-green-300"
-        >
-            <lucide-icon
-                name="plus"
-                class="h-16 w-16 text-green-800"
-            ></lucide-icon>
-        </button>
+    <!--Card con colori -->
+    <div class="mt-4 flex flex-wrap justify-around gap-4 px-4">
+        <div *ngFor="let color of colors" class="flex flex-col items-center">
+            <div class="card w-64 shadow-sm" [style.backgroundColor]="color.hex">
+                <div class="card-body flex h-80 items-center justify-center"></div>
+                <div class="flex justify-center p-4">
+                    <lucide-icon name="copy" class="h-6 w-6"></lucide-icon>
+                </div>
+            </div>
+            <!-- Testo sotto la card -->
+            <h3 class="mt-2 text-green-900 uppercase dark:text-violet-300">{{ color.hex }}</h3>
+        </div>
     </div>
 
-    <!-- Sottotitolo -->
-    <div
-        class="col-span-12 row-span-2 mt-10 flex items-center justify-center pl-8"
-    >
-        <p class="text-xl text-green-800 dark:text-green-300">
-            Minimal, free habit tracker for people who hate messy apps and want
-            to focus on building good habits.
-        </p>
+    <!--Button per generare palette-->
+    <div class="mt-4 flex justify-center">
+        <button
+            (click)="generateMonoPalette(5)"
+            class="btn btn-lg bg mb-4 rounded-full bg-green-900 px-4 py-2 text-green-200 dark:bg-violet-300 dark:text-violet-950"
+        >
+            Generate Palette
+        </button>
     </div>
 </div>

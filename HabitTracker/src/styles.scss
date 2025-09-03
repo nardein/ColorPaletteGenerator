@@ -2,6 +2,7 @@
 @import 'tailwindcss';
 @plugin "daisyui";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 /* Hanson Bold */
 @font-face {
     font-family: 'Hanson';
@@ -22,6 +23,7 @@
 @theme {
     --font-hanson: Hanson, sans-serif;
     --font-Roboto: Roboto;
+    --inset-shadow-md: inset 0 0 8px rgba(0, 0, 0, 0.25);
 }
 
 html,
@@ -31,4 +33,5 @@ body {
     padding: 0;
     box-sizing: border-box;
     @apply transition-colors duration-500 ease-in-out;
+    background-color: #f0f0f0;
 }

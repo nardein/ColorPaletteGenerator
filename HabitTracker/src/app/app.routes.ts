@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router'
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
@@ -9,15 +9,11 @@ export const routes: Routes = [
     {
         path: 'Home',
         loadComponent: () =>
-            import('./components/home/home.component').then(
-                (m) => m.HomeComponent
-            ),
+            import('./components/home/home.component').then((m) => m.HomeComponent),
     },
     {
-        path: 'HabitFormComponent',
+        path: 'Palette',
         loadComponent: () =>
-            import('./components/habit-form/habit-form-component').then(
-                (m) => m.HabitFormComponent
-            ),
+            import('./components/home/palette/palette.component').then((m) => m.PaletteComponent),
     },
-]
+];
