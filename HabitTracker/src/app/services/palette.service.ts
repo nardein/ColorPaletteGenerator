@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Color } from '../color/color.model';
 
@@ -12,26 +12,6 @@ export class PaletteService {
 
     constructor() {
         this.generatePalette();
-        this._palette.next([
-            {
-                hex: '#ff0000',
-                hsl: { h: 0, s: 100, l: 50 },
-                rgb: { r: 255, g: 0, b: 0 },
-                locked: false,
-            },
-            {
-                hex: '#00ff00',
-                hsl: { h: 120, s: 100, l: 50 },
-                rgb: { r: 0, g: 255, b: 0 },
-                locked: false,
-            },
-            {
-                hex: '#0000ff',
-                hsl: { h: 240, s: 100, l: 50 },
-                rgb: { r: 0, g: 0, b: 255 },
-                locked: false,
-            },
-        ]);
     }
 
     // genera un colore esadecimale casuale
@@ -139,6 +119,7 @@ export class PaletteService {
                 rgb: this.hexToRgb(hex),
                 hsl: this.hexToHsl(hex),
                 locked: false,
+                copied: signal(false),
             });
         }
         this._palette.next(newPalette);
@@ -147,7 +128,7 @@ export class PaletteService {
     generateMonoPalette(count: number = 5): void {
         const hue = Math.random() * 360;
         const baseS = 60 + Math.random() * 20; // saturazione base 60-80%
-        const minL = 30; // luminosità più scura
+        const minL = 15; // luminosità più scura
         const maxL = 80; // luminosità più chiara
         const step = (maxL - minL) / (count - 1);
 
@@ -165,6 +146,7 @@ export class PaletteService {
                 rgb: this.hexToRgb(hex),
                 hsl,
                 locked: false,
+                copied: signal(false),
             });
         }
         newPalette.sort((a, b) => a.hsl.l - b.hsl.l);

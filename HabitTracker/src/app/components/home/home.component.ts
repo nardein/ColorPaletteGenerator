@@ -18,6 +18,11 @@ export class HomeComponent {
 
     colors: Color[] = [];
 
+    // esponi il signal al template
+    theme = this.themeService.theme;
+
+    copied = signal(false);
+
     ngOnInit() {
         this.paletteService.palette$.subscribe((palette) => {
             this.colors = palette;
@@ -29,14 +34,17 @@ export class HomeComponent {
         this.paletteService.generateMonoPalette(count);
     }
 
-    // esponi il signal al template
-    theme = this.themeService.theme;
-
     toggleTheme() {
         this.themeService.toggleTheme();
     }
 
     get knobPosition() {
         return this.theme() === 'light' ? 'left-1' : 'right-1';
+    }
+
+    copyText(color: Color) {
+        navigator.clipboard.writeText(color.hex);
+        color.copied?.set(true);
+        setTimeout(() => color.copied!.set(false), 800);
     }
 }
