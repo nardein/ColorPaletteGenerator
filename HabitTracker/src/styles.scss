@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+
 @plugin "daisyui";
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @plugin "tailwindcss-motion";
 
 /* Hanson Bold */
@@ -20,6 +23,14 @@
     font-style: normal;
 }
 
+.font-hanson {
+    font-family: 'Hanson';
+}
+
+.font-roboto {
+    font-family: 'Roboto';
+}
+
 @theme {
     --font-hanson: Hanson, sans-serif;
     --font-Roboto: Roboto;
@@ -28,10 +39,9 @@
 
 html,
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Hanson', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     @apply transition-colors duration-500 ease-in-out;
-    background-color: #f0f0f0;
 }

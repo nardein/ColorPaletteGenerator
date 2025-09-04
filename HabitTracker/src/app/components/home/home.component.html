@@ -1,16 +1,20 @@
-<div class="min-h-screen bg-green-200 dark:bg-gray-900">
+<div [class]="currentPalette.bg + ' min-h-screen'">
     <div class="grid grid-cols-12 gap-4 p-4">
         <!-- Header: Titoli + Luna -->
         <div class="col-span-9 row-span-3 flex items-start justify-between pl-4">
             <!-- Titoli -->
-            <div class="flex gap-2">
+            <div class="flex gap-4">
                 <h1
-                    class="font-hanson text-6xl leading-none text-green-900 text-shadow-lg dark:text-violet-300"
+                    [class]="
+                        currentPalette.text + ' font-hanson text-6xl leading-none text-shadow-lg'
+                    "
                 >
                     Color
                 </h1>
                 <h1
-                    class="font-hanson text-6xl leading-none text-green-900 text-shadow-lg dark:text-violet-300"
+                    [class]="
+                        currentPalette.text + ' font-hanson text-6xl leading-none text-shadow-lg'
+                    "
                 >
                     Palette
                 </h1>
@@ -18,22 +22,26 @@
 
             <!-- Toggle Tema -->
             <div
-                class="inset-shadow-md dark:inset-shadow-md absolute top-4 right-4 flex h-10 w-20 cursor-pointer items-center justify-between rounded-full bg-green-600 p-1 inset-shadow-green-950 dark:bg-violet-300 dark:inset-shadow-violet-950"
+                [class]="
+                    currentPalette.text +
+                    currentPalette.toggle +
+                    'inset-shadow-md dark:inset-shadow-md absolute top-4 right-4 flex h-10 w-20 cursor-pointer items-center justify-between rounded-full p-1'
+                "
                 (click)="toggleTheme()"
             >
                 <!-- Sole e Luna fissi ai lati -->
-                <lucide-icon name="sun" class="h-6 w-6 text-green-900"></lucide-icon>
-                <lucide-icon name="moon" class="h-6 w-6 text-green-900"></lucide-icon>
+                <lucide-icon name="sun" [class]="currentPalette.text + ' h-6 w-6'"></lucide-icon>
+                <lucide-icon name="moon" [class]="currentPalette.text + ' h-6 w-6'"></lucide-icon>
 
                 <!-- Knob mobile -->
                 <div
-                    class="absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-transform duration-300 ease-in-out"
+                    class="dark:shadow' absolute top-1 h-8 w-8 rounded-full bg-white shadow transition-transform duration-300 ease-in-out"
                     [ngClass]="theme() === 'light' ? 'translate-x-0' : 'translate-x-10'"
                 ></div>
             </div>
         </div>
         <div class="col-span-9 row-span-3 flex justify-start pl-4">
-            <p class="text-xl text-green-900 dark:text-violet-300">
+            <p [class]="currentPalette.text + ' font-roboto text-xl'">
                 Minimal, free color palette generator for people who hate messy apps.
             </p>
         </div>
@@ -69,7 +77,7 @@
                 </div>
             </div>
             <!-- Testo sotto la card -->
-            <h3 class="mt-2 text-green-900 uppercase dark:text-violet-300">{{ color.hex }}</h3>
+            <h3 [class]="currentPalette.text + ' mt-2 uppercase'">{{ color.hex }}</h3>
         </div>
     </div>
 
@@ -77,7 +85,10 @@
     <div class="mt-4 flex justify-center">
         <button
             (click)="generateMonoPalette(5)"
-            class="btn btn-lg bg mb-4 rounded-full bg-green-900 px-4 py-2 text-green-200 dark:bg-violet-300 dark:text-violet-950"
+            [class]="
+                currentPalette.button +
+                ' btn btn-lg bg font-roboto mb-4 rounded-full px-4 py-2 text-2xl'
+            "
         >
             Generate Palette
         </button>

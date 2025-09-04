@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaletteService } from '../../../services/palette.service';
-import { Color } from '../../../color/color.model';
+import { Color } from '../../../models/color.model';
 @Component({
     selector: 'app-palette',
     imports: [CommonModule],

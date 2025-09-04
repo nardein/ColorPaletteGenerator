@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Color } from '../color/color.model';
+import { Color } from '../models/color.model';
 
 @Injectable({
     providedIn: 'root',
