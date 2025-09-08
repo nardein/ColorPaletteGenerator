@@ -1,65 +1,87 @@
 import { Component, inject, signal } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../services/theme.service';
-import { PaletteComponent } from './palette/palette.component';
 import { PaletteService } from '../../services/palette.service';
 import { Color } from '../../models/color.model';
 import { ThemePalette } from '../../models/themePalette.model';
 import { lightPalette } from '../../models/themePalette.model';
 import { darkPalette } from '../../models/themePalette.model';
+import { defaultLightPalette } from '../../models/themePalette.model';
+import { defaultDarkPalette } from '../../models/themePalette.model';
+import { HeaderComponent } from './header/header.component';
+import { PaletteGridComponent } from './palette-grid/palette-grid.component';
+
 @Component({
-    selector: 'app-home',
-    imports: [LucideAngularModule, CommonModule, PaletteComponent],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
+  selector: 'app-home',
+  imports: [LucideAngularModule, CommonModule, FormsModule, HeaderComponent, PaletteGridComponent],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-    private themeService = inject(ThemeService);
+  constructor(
+    private paletteService: PaletteService,
+    public themeService: ThemeService
+  ) {}
 
-    constructor(private paletteService: PaletteService) {}
+  colors: Color[] = [];
 
-    //Array di colori basati sulle classi Tailwind
+  //signal per copiare il testo
+  copied = signal(false);
 
-    currentPalette!: ThemePalette;
+  isRandomPaletteActive = false;
 
-    //Imposta i colori di sfondo casualmente
-    setRandomThemeColors() {
-        const palette = this.theme() === 'light' ? lightPalette : darkPalette;
-        this.currentPalette = palette[Math.floor(Math.random() * palette.length)];
+  ngOnInit() {
+    // Imposta la palette iniziale in base allo stato del toggle
+    if (this.isRandomPaletteActive) {
+      this.setRandomThemeColors();
+    } else {
+      this.themeService.theme() === 'light' ? defaultLightPalette : defaultDarkPalette;
     }
+    this.paletteService.palette$.subscribe((palette) => {
+      this.colors = palette;
+    });
+    this.paletteService.generateMonoPalette(5);
+  }
 
-    colors: Color[] = [];
+  //Imposta i colori di sfondo casualmente
+  setRandomThemeColors() {
+    const palette = this.themeService.theme() === 'light' ? lightPalette : darkPalette;
+    this.themeService.currentPalette.set(palette[Math.floor(Math.random() * palette.length)]);
+  }
 
-    // esponi il signal al template
-    theme = this.themeService.theme;
+  //Genera la palette monocromatica
+  generateMonoPalette(count: number = 5) {
+    this.paletteService.generateMonoPalette(count);
+  }
 
-    copied = signal(false);
+  //Genera la palette random
+  generateRandomPalette(count: number = 5) {
+    this.paletteService.generateRandomPalette(count);
+  }
 
-    ngOnInit() {
-        this.setRandomThemeColors();
-        this.paletteService.palette$.subscribe((palette) => {
-            this.colors = palette;
-        });
-        this.paletteService.generateMonoPalette(5);
+  //Attima il tema dark/light
+  toggleTheme() {
+    this.themeService.toggleTheme();
+
+    if (this.isRandomPaletteActive) {
+      this.setRandomThemeColors();
+    } else {
+      this.themeService.theme() === 'light' ? defaultLightPalette : defaultDarkPalette;
     }
+  }
 
-    generateMonoPalette(count: number = 5) {
-        this.paletteService.generateMonoPalette(count);
+  //Toggle per default o random palette del sito
+  toggleRandomPalette() {
+    if (this.isRandomPaletteActive) {
+      this.setRandomThemeColors();
+    } else {
+      this.themeService.theme() === 'light' ? defaultLightPalette : defaultDarkPalette;
     }
+  }
 
-    toggleTheme() {
-        this.themeService.toggleTheme();
-        this.setRandomThemeColors();
-    }
-
-    get knobPosition() {
-        return this.theme() === 'light' ? 'left-1' : 'right-1';
-    }
-
-    copyText(color: Color) {
-        navigator.clipboard.writeText(color.hex);
-        color.copied?.set(true);
-        setTimeout(() => color.copied!.set(false), 800);
-    }
+  get knobPosition() {
+    return this.themeService.theme() === 'light' ? 'left-1' : 'right-1';
+  }
 }
