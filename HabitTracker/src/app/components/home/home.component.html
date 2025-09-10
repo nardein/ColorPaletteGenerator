@@ -11,26 +11,75 @@
   <app-palette-grid class="col-span-12 row-span-3"></app-palette-grid>
   <!--Container button dropdown-->
   <div class="col-span-12 mt-8 flex items-center justify-center gap-4">
-    <!--Dropdown menu method-->
-    <details class="dropdown">
-      <summary [class]="themeService.buttonClass + ' btn btn-lg font-roboto mb-4 rounded-full px-4 py-2 text-2xl'">
-        Choose method
-        <span></span>
-      </summary>
-      <ul [class]="themeService.buttonClass + ' menu dropdown-content font-roboto rounded-box z-1 w-52 p-2 shadow-sm'">
-        <li><a>Random</a></li>
-        <li><a>Monocromatic</a></li>
-        <li><a>Analogus</a></li>
-        <li><a>Complementary</a></li>
-      </ul>
-    </details>
+    <!-- Open the modal using ID.showModal() method -->
+    <div [class]="themeService.containerClass + ' flex w-fit items-center justify-center rounded-xl p-2'">
+      <!--Button per generare palette-->
+      <button
+        (click)="generatePalette(paletteCount)"
+        [class]="
+          themeService.buttonClass + ' btn btn-lg font-roboto m-2 mt-4 mb-4 rounded-full border-none px-4 py-2 text-2xl'
+        "
+      >
+        Generate Palette
+      </button>
+      <!-- Open the modal using ID.showModal() method -->
+      <button
+        [class]="
+          themeService.buttonClass + ' btn btn-lg font-roboto m-2 mt-4 mb-4 rounded-full border-none px-4 py-2 text-2xl'
+        "
+        onclick="my_modal_2.showModal()"
+      >
+        <lucide-icon name="settings2"></lucide-icon>
+      </button>
+      <dialog id="my_modal_2" class="modal">
+        <div [class]="themeService.containerClass + ' modal-box w-fit'">
+          <div class="flex items-center gap-2">
+            <h1 [class]="themeService.textClass + ' font-roboto text-2xl leading-none font-bold'">Generation method</h1>
+          </div>
 
-    <!--Button per generare palette-->
-    <button
-      (click)="generateMonoPalette(5)"
-      [class]="themeService.buttonClass + ' btn btn-lg font-roboto mb-4 rounded-full px-4 py-2 text-2xl'"
-    >
-      Generate Palette
-    </button>
+          <div class="flex justify-center">
+            <ul [class]="themeService.buttonClass + ' menu bg-base-200 rounded-box font-roboto mt-4 w-56 text-lg'">
+              <li><a (click)="selectedMethod = 'random'">Random</a></li>
+              <li [class.active]="selectedMethod === 'complementary'">
+                <a (click)="selectedMethod = 'monocromatic'">Monocromatic</a>
+              </li>
+
+              <li><a (click)="selectedMethod = 'analogus'">Analogus</a></li>
+              <li><a (click)="selectedMethod = 'complementary'">Complementary</a></li>
+            </ul>
+          </div>
+        </div>
+        <form method="dialog" class="modal-backdrop"><button>close</button></form>
+      </dialog>
+
+      <div class="m-2 flex items-center">
+        <button
+          (click)="incrementCount()"
+          [class]="themeService.buttonClass + ' btn btn-lg mx-2 rounded-full border-none'"
+        >
+          <lucide-icon name="plus"></lucide-icon>
+        </button>
+        <button (click)="decrementCount()" [class]="themeService.buttonClass + ' btn btn-lg rounded-full border-none'">
+          <lucide-icon name="minus"></lucide-icon>
+        </button>
+      </div>
+      <button [class]="themeService.buttonClass + ' font-roboto btn btn-lg rounded-xl border-none'">
+        <lucide-icon name="download"></lucide-icon>Export
+      </button>
+    </div>
+  </div>
+
+  <div class="col-span-12 flex items-center justify-center">
+    <p [class]="themeService.textClass + ' font-roboto m-2 text-center text-sm'">
+      If you want to support this project, consider
+    </p>
+    <a href="https://ko-fi.com/B0B71KQCAS" target="_blank" class="flex justify-center"
+      ><img
+        height="36"
+        style="border: 0px; height: 36px"
+        src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
+        border="0"
+        alt="Buy Me a Coffee at ko-fi.com"
+    /></a>
   </div>
 </div>

@@ -1,10 +1,45 @@
-<!--Card con colori -->
-<div class="col-span-12 mt-4 flex flex-col sm:flex sm:flex-row sm:justify-center">
-  <div *ngFor="let color of colors" class="flex flex-col items-center">
+<!--
+<div class="flex-w col-span-12 mt-4 flex flex-col sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
+  <div *ngFor="let color of colors" class="flex min-w-0 flex-1 basis-0 flex-col items-center">
     <div class="w-full shadow-sm sm:w-64 sm:rounded-s-3xl sm:rounded-b-full" [style.backgroundColor]="color.hex">
       <div class="card-body flex h-12 items-center justify-center sm:h-96"></div>
 
-      <!--CopyToClipboard-->
+
+      <div class="flex justify-center p-4">
+        <div class="relative h-6 w-6 cursor-pointer" (click)="copyText(color)">
+
+          <lucide-icon
+            name="copy"
+            class="absolute inset-0 transition-all duration-150 ease-out"
+            [class.opacity-0]="color.copied?.()"
+            [class.scale-50]="color.copied?.()"
+          ></lucide-icon>
+
+
+          <lucide-icon
+            name="check"
+            class="absolute inset-0 transition-all duration-150 ease-out"
+            [class.opacity-100]="color.copied?.()"
+            [class.scale-125]="color.copied?.()"
+            [class.opacity-0]="!color.copied?.()"
+            [class.scale-90]="!color.copied?.()"
+          ></lucide-icon>
+        </div>
+      </div>
+    </div>
+
+    <h3 [class]="currentPalette().text + ' mt-2 uppercase'">{{ color.hex }}</h3>
+  </div>
+</div>
+ -->
+
+<!-- Card con colori -->
+<div class="col-span-12 mt-4 flex flex-row flex-nowrap justify-center">
+  <div *ngFor="let color of colors" class="flex min-w-0 flex-1 basis-0 flex-col items-center">
+    <div class="w-full rounded-s-3xl rounded-b-full shadow-sm" [style.backgroundColor]="color.hex">
+      <div class="card-body flex h-12 items-center justify-center sm:h-96"></div>
+
+      <!-- CopyToClipboard -->
       <div class="flex justify-center p-4">
         <div class="relative h-6 w-6 cursor-pointer" (click)="copyText(color)">
           <!-- Copy icon -->
@@ -28,6 +63,8 @@
       </div>
     </div>
     <!-- Testo sotto la card -->
-    <h3 [class]="currentPalette().text + ' mt-2 uppercase'">{{ color.hex }}</h3>
+    <h3 [class]="currentPalette().text + ' mt-2 uppercase'">
+      {{ color.hex }}
+    </h3>
   </div>
 </div>

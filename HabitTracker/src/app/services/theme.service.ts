@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { defaultLightPalette, ThemePalette } from '../models/themePalette.model';
+import { defaultDarkPalette, defaultLightPalette, ThemePalette } from '../models/themePalette.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,9 @@ export class ThemeService {
   get toggleClass() {
     return this.currentPalette().toggle;
   }
+  get containerClass() {
+    return this.currentPalette().container;
+  }
 
   constructor() {
     // Leggi la preferenza salvata
@@ -30,6 +33,9 @@ export class ThemeService {
     if (saved) {
       this.theme.set(saved);
       document.documentElement.setAttribute('data-theme', saved);
+
+      const defPalette = saved === 'light' ? defaultLightPalette : defaultDarkPalette;
+      this.currentPalette.set(defPalette);
     }
   }
 
@@ -38,5 +44,8 @@ export class ThemeService {
     this.theme.set(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+
+    const defPalette = newTheme === 'light' ? defaultLightPalette : defaultDarkPalette;
+    this.currentPalette.set(defPalette);
   }
 }

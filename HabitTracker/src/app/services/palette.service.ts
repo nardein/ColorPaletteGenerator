@@ -125,7 +125,8 @@ export class PaletteService {
     this._palette.next(newPalette);
   }
 
-  generateMonoPalette(count: number = 5): void {
+  //Genera una palette monocromatica
+  generateMonoPalette(count: number): void {
     const hue = Math.random() * 360;
     const baseS = 60 + Math.random() * 20; // saturazione base 60-80%
     const minL = 15; // luminosità più scura
@@ -151,6 +152,70 @@ export class PaletteService {
     }
     newPalette.sort((a, b) => a.hsl.l - b.hsl.l);
 
+    this._palette.next(newPalette);
+  }
+
+  //Genera una palette analoga
+  generateAnalogousPalette(count: number): void {
+    const baseHue = Math.random() * 360;
+    const baseS = 60 + Math.random() * 20; // saturazione 60–80%
+    const baseL = 50; // luminosità di partenza
+    const angle = 30; // distanza tra i colori analoghi
+    const half = Math.floor(count / 2);
+
+    const newPalette: Color[] = [];
+
+    for (let i = -half; i <= half; i++) {
+      if (newPalette.length >= count) break;
+
+      const h = (baseHue + i * angle + 360) % 360;
+      const s = baseS + (Math.random() * 10 - 5); // piccola variazione
+      const l = baseL + (Math.random() * 20 - 10); // ±10% sulla luminosità
+
+      const hex = this.hslToHex(h, s, l);
+      const hsl = { h, s, l };
+
+      newPalette.push({
+        hex,
+        rgb: this.hexToRgb(hex),
+        hsl,
+        locked: false,
+        copied: signal(false),
+      });
+    }
+
+    this._palette.next(newPalette);
+  }
+
+  generateComplementaryPalette(count: number) {
+    const baseHue = Math.random() * 360;
+    const complHue = (baseHue + 180) % 360;
+    const baseS = 60 + Math.random() * 20;
+    const baseL = 40 + Math.random() * 2;
+
+    const newPalette: Color[] = [];
+
+    // esempio distribuzione su 5 colori
+    const variations = [
+      { h: baseHue, s: baseS, l: baseL - 15 }, // base più scuro
+      { h: baseHue, s: baseS, l: baseL }, // base puro
+      { h: complHue, s: baseS, l: baseL }, // complementare puro
+      { h: complHue, s: baseS, l: baseL + 15 }, // complementare più chiaro
+      { h: baseHue, s: baseS - 10, l: baseL + 10 }, // base con variazione
+    ];
+
+    for (let v of variations.slice(0, count)) {
+      const hex = this.hslToHex(v.h, v.s, v.l);
+      newPalette.push({
+        hex,
+        rgb: this.hexToRgb(hex),
+        hsl: v,
+        locked: false,
+        copied: signal(false),
+      });
+    }
+
+    newPalette.sort((a, b) => a.hsl.h - b.hsl.h);
     this._palette.next(newPalette);
   }
 

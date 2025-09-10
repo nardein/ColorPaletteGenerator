@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../services/theme.service';
 import { PaletteService } from '../../services/palette.service';
 import { Color } from '../../models/color.model';
-import { ThemePalette } from '../../models/themePalette.model';
 import { lightPalette } from '../../models/themePalette.model';
 import { darkPalette } from '../../models/themePalette.model';
 import { defaultLightPalette } from '../../models/themePalette.model';
@@ -27,6 +26,10 @@ export class HomeComponent {
 
   colors: Color[] = [];
 
+  selectedMethod: 'random' | 'monocromatic' | 'analogus' | 'complementary' = 'monocromatic';
+
+  paletteCount: number = 5;
+
   //signal per copiare il testo
   copied = signal(false);
 
@@ -42,7 +45,7 @@ export class HomeComponent {
     this.paletteService.palette$.subscribe((palette) => {
       this.colors = palette;
     });
-    this.paletteService.generateMonoPalette(5);
+    this.generatePalette(5);
   }
 
   //Imposta i colori di sfondo casualmente
@@ -52,13 +55,40 @@ export class HomeComponent {
   }
 
   //Genera la palette monocromatica
-  generateMonoPalette(count: number = 5) {
-    this.paletteService.generateMonoPalette(count);
+  generateMonoPalette(paletteCount: number) {
+    this.paletteService.generateMonoPalette(paletteCount);
   }
 
   //Genera la palette random
-  generateRandomPalette(count: number = 5) {
-    this.paletteService.generateRandomPalette(count);
+  generateRandomPalette(paletteCount: number) {
+    this.paletteService.generateRandomPalette(paletteCount);
+  }
+
+  //Genera una palette analoga
+  generateAnalogusPalette(paletteCount: number) {
+    this.paletteService.generateAnalogousPalette(paletteCount);
+  }
+
+  //Generate complementaryPalette
+  generateComplementaryPalette(paletteCount: number) {
+    this.paletteService.generateComplementaryPalette(paletteCount);
+  }
+
+  generatePalette(paletteCount: number) {
+    switch (this.selectedMethod) {
+      case 'random':
+        this.generateRandomPalette(paletteCount);
+        break;
+      case 'monocromatic':
+        this.generateMonoPalette(paletteCount);
+        break;
+      case 'analogus':
+        this.generateAnalogusPalette(paletteCount);
+        break;
+      case 'complementary':
+        this.generateComplementaryPalette(paletteCount);
+        break;
+    }
   }
 
   //Attima il tema dark/light
@@ -83,5 +113,19 @@ export class HomeComponent {
 
   get knobPosition() {
     return this.themeService.theme() === 'light' ? 'left-1' : 'right-1';
+  }
+
+  incrementCount() {
+    if (this.paletteCount < 10) {
+      this.paletteCount++;
+      this.generatePalette(this.paletteCount);
+    }
+  }
+
+  decrementCount() {
+    if (this.paletteCount > 2) {
+      this.paletteCount--;
+      this.generatePalette(this.paletteCount);
+    }
   }
 }

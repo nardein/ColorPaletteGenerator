@@ -1,7 +1,23 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { Check, Copy, CopyCheck, LucideAngularModule, Moon, Plus, Repeat, Shuffle, Sun } from 'lucide-angular';
+import {
+  Check,
+  CircleX,
+  Copy,
+  CopyCheck,
+  Download,
+  LucideAngularModule,
+  Minus,
+  Moon,
+  Plus,
+  PlusIcon,
+  Repeat,
+  Settings,
+  Settings2,
+  Shuffle,
+  Sun,
+} from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +32,11 @@ export const appConfig: ApplicationConfig = {
         Check,
         Shuffle,
         Repeat,
+        Settings2,
+        Download,
+        CircleX,
+        PlusIcon,
+        Minus,
       })
     ),
   ],

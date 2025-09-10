@@ -26,10 +26,13 @@
     ' absolute top-16 right-2 mt-4 flex h-10 w-20 cursor-pointer items-center justify-between p-1'
   "
 >
-  <div class="tooltip tooltip-left" data-tip="Try it and change the website">
-    <button [class]="themeService.buttonClass + ' btn rounded-full'">
+  <div class="tooltip tooltip-left font-roboto" [attr.data-tip]="'Try it and change the website ' + emoji">
+    <button
+      [class]="themeService.buttonClass + ' btn rounded-full'"
+      (click)="isRandomPaletteActive = !isRandomPaletteActive; toggleRandomPalette()"
+    >
       <label class="swap swap-rotate">
-        <input type="checkbox" [(ngModel)]="isRandomPaletteActive" (change)="toggleRandomPalette()" />
+        <input type="checkbox" [(ngModel)]="isRandomPaletteActive" />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

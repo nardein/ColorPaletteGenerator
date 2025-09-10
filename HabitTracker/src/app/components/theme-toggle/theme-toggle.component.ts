@@ -22,6 +22,8 @@ export class ThemeToggleComponent {
 
   isRandomPaletteActive = false;
 
+  emoji = '✌';
+
   //Imposta i colori di sfondo casualmente
   setRandomThemeColors() {
     const palette = this.themeService.theme() === 'light' ? lightPalette : darkPalette;
@@ -42,6 +44,8 @@ export class ThemeToggleComponent {
 
   //Toggle per default o random palette del sito
   toggleRandomPalette() {
+    this.isRandomPaletteActive = !this.isRandomPaletteActive;
+
     if (this.isRandomPaletteActive) {
       this.setRandomThemeColors();
     } else {
